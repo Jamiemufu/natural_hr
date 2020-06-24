@@ -8,6 +8,23 @@ $user = new User;
 if ($user->isLoggedIn()) {
     header("location:home.php");
 }
+
+/**
+ * @param $error
+ * @param array $msg
+ * @return array
+ */
+function seperateErrors($error, array $msg)
+{
+    if (strpos($error, "email") !== false) {
+        $msg['email'] = $error;
+    }
+    if (strpos($error, "password") !== false) {
+        $msg['password'] = $error;
+    }
+    return $msg;
+}
+
 //If our form has been submitted.
 if (isset($_POST['submit'])) {
 
@@ -25,8 +42,11 @@ if (isset($_POST['submit'])) {
         ),
     ));
 
+    $msg = [];
+
     foreach ($validate->errors() as $error) {
-        echo '<li style="color: red; font-size: 13px;">' . $error . '</li></br>';
+        $msg = seperateErrors($error, $msg);
+
     }
 
     if ($validate->valid()) {
@@ -38,7 +58,7 @@ if (isset($_POST['submit'])) {
         if ($login) {
             header("location:home.php");
         } else {
-            $msg = 'Wrong email or password';
+            $msg['login'] = 'Wrong email or password';
         }
     }
 
@@ -65,17 +85,25 @@ if (isset($_POST['submit'])) {
             <!-- flex item -->
             <div class="form-group">
                 <label for="email">Email Address:
-                    <input type="email" name="email" required >
+                    <?php if (isset($msg['email'])) {
+                        echo "<span class='error'>{$msg['email']}</span>";
+                    }?>
+                    <input type="email" name="email" required value="<?= isset($_POST['email']) ? $_POST['email'] : ''; ?>" >
                 </label>
             </div>
             <!-- flex item -->
             <div class="form-group">
                 <label for="password">Password:
+                    <?php if (isset($msg['password'])) {
+                        echo "<span class='error'>{$msg['password']}</span>";
+                    }?>
                     <input type="text" name="password" required>
                 </label>
             </div>
             <!-- flex item -->
-
+            <?php if(isset($msg['login'])) {
+                 echo "<span class='error' style='margin-top: 25px;'>{$msg['login']}</span>";
+            }?>
             <p><a href="/register.php">Not Registered?</a></p>
             <button type="submit" name="submit">Login</button>
         </form>

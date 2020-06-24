@@ -1,7 +1,7 @@
 body {
     height: 100vh;
     background: rgb(2,0,36);
-background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(110,9,121,0.7455357142857143) 50%, rgba(0,212,255,1) 100%);
+    background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(110,9,121,0.7455357142857143) 50%, rgba(0,212,255,1) 100%);
 }
 
 .container {
@@ -63,5 +63,10 @@ button {
 a {
     color: white;
     text-decoration: underline;
+}
+
+.error {
+    text-transform: capitalize;
+    color: red;
 }
 

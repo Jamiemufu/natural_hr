@@ -9,6 +9,31 @@ if ($user->isLoggedIn()) {
     header("location:home.php");
 }
 
+/**
+ * @param $error
+ * @param array $msg
+ * @return array
+ */
+function seperateErrors($error, array $msg)
+{
+    if (strpos($error, "username") !== false) {
+        $msg['username'] = $error;
+    }
+    if (strpos($error, "firstname") !== false) {
+        $msg['firstname'] = $error;
+    }
+    if (strpos($error, "lastname") !== false) {
+        $msg['lastname'] = $error;
+    }
+    if (strpos($error, "email") !== false) {
+        $msg['email'] = $error;
+    }
+    if (strpos($error, "password") !== false) {
+        $msg['password'] = $error;
+    }
+    return $msg;
+}
+
 //If our form has been submitted.
 if (isset($_POST['submit'])) {
 
@@ -38,10 +63,14 @@ if (isset($_POST['submit'])) {
         ),
     ));
 
+    $msg = [];
+
     foreach ($validate->errors() as $error) {
-        echo '<li style="color: red; font-size: 13px;">' . $error . '</li></br>';
+        print_r($error);
+        $msg = seperateErrors($error, $msg);
     }
 
+    
     if ($validate->valid()) {
 
         //insert data into database.
@@ -56,6 +85,7 @@ if (isset($_POST['submit'])) {
 }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,54 +94,69 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="css/style.css">
 
     <title>Vanilla PHP Login/Register</title>
-  </head>
+</head>
 
 <body>
 
-    <div class="container">
-        <form action="" method="post">
+<div class="container">
+    <form action="" method="post">
 
-            <h1>Register</h1>
-            <!-- flex item -->
-            <div class="form-group">
-                <label for="username">Username:
-                    <input type="text" name="username" required>
-                </label>
-            </div>
-            <!-- flex item -->
-            <div class="form-group">
-                <label for="firstname">First name:
-                    <input type="text" name="firstname" required>
-                </label>
-            </div>
-            <!-- flex item -->
-            <div class="form-group">
-                <label for="lastname">Last name:
-                    <input type="text" name="lastname" required>
-                </label>
-            </div>
-            <!-- flex item -->
-            <div class="form-group">
-                <label for="email">Email Address:
-                    <input type="email" name="email" required>
-                </label>
-            </div>
-            <!-- flex item -->
-            <div class="form-group">
-                <label for="password">Password:
-                    <input type="text" name="password" required>
-                </label>
-            </div>
-            <!-- flex item -->
-            <div class="form-group">
-                <label for="confirm">Confirm Password:
-                    <input type="text" name="confirm" required>
-                </label>
-            </div>
-            <p><a href="/index.php">Already registered?</a></p>
-            <button type="submit" name="submit">Register</button>
-        </form>
-    </div>
+        <h1>Register</h1>
+        <!-- flex item -->
+        <div class="form-group">
+            <label for="username">Username:
+                <?php if (isset($msg['username'])) {
+                    echo "<span class='error'>{$msg['username']}</span>";
+                } ?>
+                <input type="text" name="username" value="<?= isset($_POST['username']) ? $_POST['username'] : ''; ?>">
+            </label>
+        </div>
+        <!-- flex item -->
+        <div class="form-group">
+            <label for="firstname">First name:
+                <?php if (isset($msg['firstname'])) {
+                    echo "<span class='error'>{$msg['firstname']}</span>";
+                } ?>
+                <input type="text" name="firstname" value="<?= isset($_POST['firstname']) ? $_POST['firstname'] : ''; ?>">
+            </label>
+        </div>
+        <!-- flex item -->
+        <div class="form-group">
+            <label for="lastname">Last name:
+                <?php if (isset($msg['lastname'])) {
+                    echo "<span class='error'>{$msg['lastname']}</span>";
+                } ?>
+                <input type="text" name="lastname" value="<?= isset($_POST['lastname']) ? $_POST['lastname'] : ''; ?>">
+            </label>
+        </div>
+        <!-- flex item -->
+        <div class="form-group">
+            <label for="email">Email Address:
+                <?php if (isset($msg['email'])) {
+                    echo "<span class='error'>{$msg['email']}</span>";
+                } ?>
+                <input type="email" name="email" value="<?= isset($_POST['email']) ? $_POST['email'] : ''; ?>">
+            </label>
+        </div>
+        <!-- flex item -->
+        <div class="form-group">
+            <label for="password">Password:
+                <?php if (isset($msg['password'])) {
+                    echo "<span class='error'>{$msg['password']}</span>";
+                } ?>
+                <input type="password" name="password">
+            </label>
+        </div>
+        <!-- flex item -->
+        <div class="form-group">
+            <label for="confirm">Confirm Password:
+                <input type="password" name="confirm">
+            </label>
+        </div>
+        <p><a href="/index.php">Already registered?</a></p>
+        <button type="submit" name="submit">Register</button>
+    </form>
+</div>
 
 </body>
 </html>

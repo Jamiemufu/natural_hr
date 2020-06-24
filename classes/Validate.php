@@ -12,21 +12,6 @@ class Validate
     }
 
     /**
-     * Check if email address is already registered
-     *
-     * @param [type] $value
-     * @return void
-     */
-    public function checkEmailExsists($value)
-    {
-        $statement = $this->db->prepare('SELECT * FROM users WHERE email = :uemail');
-        $statement->execute(['uemail' => $value]);
-        if ($statement->rowCount() > 0) {
-            return false;
-        }
-    }
-
-    /**
      * isValid - check $_POST vars
      *
      * will return either passed or errors
@@ -40,7 +25,7 @@ class Validate
         foreach ($items as $item => $rules) {
             $item = trim($item);
             $item = strip_tags($item);
-            
+
             foreach ($rules as $rule => $v) {
 
                 $value = trim($inputs[$item]);
@@ -51,8 +36,8 @@ class Validate
                     $this->addError("{$item} is required");
                 }
                 // check if already registered
-                if ($rule === 'unique' && $rule === 'required') {
-                    if (!$this->checkEmailExsists($value)) {
+                if ($rule === 'unique') {
+                    if (!$this->checkEmailExsists($value) === false) {
                         $this->addError("{$item} is already registered");
                     };
                 }
@@ -70,6 +55,21 @@ class Validate
         }
 
         return $this;
+    }
+
+    /**
+     * Check if email address is already registered
+     *
+     * @param [type] $value
+     * @return void
+     */
+    public function checkEmailExsists($value)
+    {
+        $statement = $this->db->prepare('SELECT * FROM users WHERE email = :uemail');
+        $statement->execute(['uemail' => $value]);
+        if ($statement->rowCount() > 0) {
+           return true;
+        }
     }
 
     /**
