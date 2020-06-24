@@ -21,7 +21,7 @@ if (!$user->isLoggedIn()) {
 $user->setID($id);
 $data = $user->getInfo();
 
-//get currentuploads as array
+//get current uploads as array
 $currentUploads = json_decode($data['uploads']);
 
 if (isset($_POST['submit'])) {
@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
 
     //pass username and id to make the file unique
     if ($upload->uploadFile('file', $data['username'], $data['id'])) {
-        $success = $upload->getUploadName() . " Successfully uploaded...";
+        $success = $upload->getOriginalName() . " Successfully uploaded...";
         //add onto array for users->uploads
         $currentUploads[] = $upload->getUploadName();
         //encode and add to the array for user uploads
@@ -43,6 +43,7 @@ if (isset($_POST['submit'])) {
         $success = $upload->getMessage();
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -72,7 +73,11 @@ if (isset($_POST['submit'])) {
             echo "<h3>Current Uploads</h3>";
             echo "<ul>";
             foreach ($currentUploads as $upload) {
-                echo "<li><a href='/uploads/{$upload}'>{$upload}</a></li>";
+                $uploadName = $upload;
+                $uploadName = str_replace($data['id'], "", $uploadName);
+                $uploadName = str_replace($data['username'], "", $uploadName);
+                $uploadName = str_replace("_", "", $uploadName);
+                echo "<li><a href='/uploads/{$upload}'>{$uploadName}</a></li>";
             }
             echo "</ul>";
         } ?>

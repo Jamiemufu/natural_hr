@@ -108,7 +108,7 @@ if (isset($_POST['submit'])) {
                 <?php if (isset($msg['username'])) {
                     echo "<span class='error'>{$msg['username']}</span>";
                 } ?>
-                <input type="text" name="username" value="<?= isset($_POST['username']) ? $_POST['username'] : ''; ?>">
+                <input type="text" name="username" required value="<?= isset($_POST['username']) ? $_POST['username'] : ''; ?>">
             </label>
         </div>
         <!-- flex item -->
@@ -117,7 +117,7 @@ if (isset($_POST['submit'])) {
                 <?php if (isset($msg['firstname'])) {
                     echo "<span class='error'>{$msg['firstname']}</span>";
                 } ?>
-                <input type="text" name="firstname" value="<?= isset($_POST['firstname']) ? $_POST['firstname'] : ''; ?>">
+                <input type="text" name="firstname" required value="<?= isset($_POST['firstname']) ? $_POST['firstname'] : ''; ?>">
             </label>
         </div>
         <!-- flex item -->
@@ -126,7 +126,7 @@ if (isset($_POST['submit'])) {
                 <?php if (isset($msg['lastname'])) {
                     echo "<span class='error'>{$msg['lastname']}</span>";
                 } ?>
-                <input type="text" name="lastname" value="<?= isset($_POST['lastname']) ? $_POST['lastname'] : ''; ?>">
+                <input type="text" name="lastname" required value="<?= isset($_POST['lastname']) ? $_POST['lastname'] : ''; ?>">
             </label>
         </div>
         <!-- flex item -->
@@ -135,7 +135,7 @@ if (isset($_POST['submit'])) {
                 <?php if (isset($msg['email'])) {
                     echo "<span class='error'>{$msg['email']}</span>";
                 } ?>
-                <input type="email" name="email" value="<?= isset($_POST['email']) ? $_POST['email'] : ''; ?>">
+                <input type="email" name="email" required value="<?= isset($_POST['email']) ? $_POST['email'] : ''; ?>">
             </label>
         </div>
         <!-- flex item -->
@@ -144,13 +144,14 @@ if (isset($_POST['submit'])) {
                 <?php if (isset($msg['password'])) {
                     echo "<span class='error'>{$msg['password']}</span>";
                 } ?>
-                <input type="password" name="password">
+                <input type="password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 6
+                or more characters">
             </label>
         </div>
         <!-- flex item -->
         <div class="form-group">
             <label for="confirm">Confirm Password:
-                <input type="password" name="confirm">
+                <input type="password" name="confirm" required>
             </label>
         </div>
         <p><a href="/index.php">Already registered?</a></p>

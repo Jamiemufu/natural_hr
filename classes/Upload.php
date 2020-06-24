@@ -8,51 +8,59 @@ class Upload
     private $extensions;
     private $maxSize;
     private $uploadName;
+    private $originalName;
     public $name = 'Upload';
 
-    function setDir($path)
+    public function setDir($path)
     {
         $this->destinationPath = $path;
     }
 
-    function setMaxSize($sizeMB)
+    public function setMaxSize($sizeMB)
     {
         $this->maxSize = $sizeMB * (1024 * 1024);
     }
 
-    function setExtensions($options)
+    public function setExtensions($options)
     {
         $this->extensions = $options;
     }
 
-    function setMessage($message)
+    public function setMessage($message)
     {
         $this->errorMessage = $message;
     }
 
-    function getMessage()
+    public function getMessage()
     {
         return $this->errorMessage;
     }
 
-    function getUploadName()
+    public function getUploadName()
     {
         return $this->uploadName;
     }
 
-    function uploadFile($file, $username, $id)
+    public function getOriginalName() 
+    {
+        return $this->originalName;
+    }
+
+    public function uploadFile($file, $username, $id)
     {
         $result = false;
         $size = $_FILES[$file]["size"];
+        $originalName = $_FILES[$file]["name"];
         $name = $username . $id . "_" . $_FILES[$file]["name"];
         $ext = pathinfo($name, PATHINFO_EXTENSION);
 
         $this->uploadName = $name;
+        $this->originalName = $originalName;
 
         if (empty($name)) {
             $this->setMessage("File not selected ");
         } else if ($size > $this->maxSize) {
-            $this->setMessage("Too large file !");
+            $this->setMessage("File too large");
         } else if (in_array($ext, $this->extensions)) {
             if (!is_dir($this->destinationPath))
                 mkdir($this->destinationPath);
@@ -73,4 +81,5 @@ class Upload
         }
         return $result;
     }
+
 }
