@@ -12,29 +12,12 @@ require_once 'config.php';
  */
 class Database
 {
-    /**
-     * @var string
-     */
+    
     private $host = DB_SERVER;
-    /**
-     * @var string
-     */
     private $user = DB_USERNAME;
-    /**
-     * @var string
-     */
     private $db = DB_DATABASE;
-    /**
-     * @var string
-     */
     private $pass = DB_PASSWORD;
-    /**
-     * @var string
-     */
     private $table = DB_TABLE;
-    /**
-     * @var PDO
-     */
     private $conn;
 
     /**

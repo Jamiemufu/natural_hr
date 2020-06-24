@@ -6,33 +6,12 @@
 class Upload
 {
 
-    /**
-     * @var
-     */
     private $destinationPath;
-    /**
-     * @var
-     */
     private $errorMessage;
-    /**
-     * @var
-     */
     private $extensions;
-    /**
-     * @var
-     */
     private $maxSize;
-    /**
-     * @var
-     */
     private $uploadName;
-    /**
-     * @var
-     */
     private $originalName;
-    /**
-     * @var string
-     */
     public $name = 'Upload';
 
     /**
@@ -109,7 +88,7 @@ class Upload
         $this->originalName = $originalName;
 
         if (empty($name)) {
-            $this->setMessage("File not selected ");
+            $this->setMessage("File not selected");
         } else if ($size > $this->maxSize) {
             $this->setMessage("File too large");
         } else if (in_array($ext, $this->extensions)) {

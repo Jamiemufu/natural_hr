@@ -7,37 +7,13 @@ include "Database.php";
  */
 class User
 {
-    /**
-     * @var
-     */
     protected $db;
-    /**
-     * @var
-     */
     private $id;
-    /**
-     * @var
-     */
     private $username;
-    /**
-     * @var
-     */
     private $password;
-    /**
-     * @var
-     */
     private $firstname;
-    /**
-     * @var
-     */
     private $lastname;
-    /**
-     * @var
-     */
     private $email;
-    /**
-     * @var
-     */
     private $uploads;
 
 

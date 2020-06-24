@@ -5,18 +5,9 @@
  */
 class Validate
 {
-    /**
-     * @var array
-     */
+    
     private $_errors = array();
-    /**
-     * @var bool
-     */
     private $_passed = false;
-
-    /**
-     * @var PDO
-     */
     private $db;
 
     /**
