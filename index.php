@@ -73,41 +73,41 @@ if (isset($_POST['submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/style.css">
     <title>Vanilla PHP Login/Register</title>
-  </head>
+</head>
 
 <body>
 
-    <div class="container">
-        <form action="" method="post">
+<div class="container">
+    <form action="" method="post">
 
-            <h1>Login</h1>
+        <h1>Login</h1>
 
-            <!-- flex item -->
-            <div class="form-group">
-                <label for="email">Email Address:
-                    <?php if (isset($msg['email'])) {
-                        echo "<span class='error'>{$msg['email']}</span>";
-                    }?>
-                    <input type="email" name="email" required value="<?= isset($_POST['email']) ? $_POST['email'] : ''; ?>" >
-                </label>
-            </div>
-            <!-- flex item -->
-            <div class="form-group">
-                <label for="password">Password:
-                    <?php if (isset($msg['password'])) {
-                        echo "<span class='error'>{$msg['password']}</span>";
-                    }?>
-                    <input type="text" name="password" required>
-                </label>
-            </div>
-            <!-- flex item -->
-            <?php if(isset($msg['login'])) {
-                 echo "<span class='error' style='margin-top: 25px;'>{$msg['login']}</span>";
-            }?>
-            <p><a href="/register.php">Not Registered?</a></p>
-            <button type="submit" name="submit">Login</button>
-        </form>
-    </div>
+        <!-- flex item -->
+        <div class="form-group">
+            <label for="email">Email Address:
+                <?php if (isset($msg['email'])) {
+                    echo "<span class='error'>{$msg['email']}</span>";
+                } ?>
+                <input type="email" name="email" required value="<?= isset($_POST['email']) ? $_POST['email'] : ''; ?>">
+            </label>
+        </div>
+        <!-- flex item -->
+        <div class="form-group">
+            <label for="password">Password:
+                <?php if (isset($msg['password'])) {
+                    echo "<span class='error'>{$msg['password']}</span>";
+                } ?>
+                <input type="text" name="password" required>
+            </label>
+        </div>
+        <!-- flex item -->
+        <?php if (isset($msg['login'])) {
+            echo "<span class='error' style='margin-top: 25px;'>{$msg['login']}</span>";
+        } ?>
+        <p><a href="/register.php">Not Registered?</a></p>
+        <button type="submit" name="submit">Login</button>
+    </form>
+</div>
 
 </body>
 </html>

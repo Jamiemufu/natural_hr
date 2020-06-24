@@ -11,6 +11,7 @@ class User
     private $firstname;
     private $lastname;
     private $email;
+    private $uploads;
 
     public function __construct()
     {
@@ -26,7 +27,7 @@ class User
      */
     public function setID($id)
     {
-        $this->_id = $id;
+        $this->id = $id;
     }
 
     /**
@@ -37,7 +38,7 @@ class User
      */
     public function setUsername($username)
     {
-        $this->_username = $username;
+        $this->username = $username;
     }
 
     /**
@@ -48,7 +49,7 @@ class User
      */
     public function setEmail($email)
     {
-        $this->_email = $email;
+        $this->email = $email;
     }
 
     /**
@@ -59,7 +60,7 @@ class User
      */
     public function setPassword($password)
     {
-        $this->_password = $password;
+        $this->password = $password;
     }
 
     /**
@@ -70,7 +71,7 @@ class User
      */
     public function setFirstname($firstname)
     {
-        $this->_firstname = $firstname;
+        $this->firstname = $firstname;
     }
 
     /**
@@ -81,15 +82,26 @@ class User
      */
     public function setLastname($lastname)
     {
-        $this->_lastname = $lastname;
+        $this->lastname = $lastname;
+    }
+
+    /**
+     * Set user uploads
+     *
+     * @param $uploads
+     * @retern void
+     */
+    public function setUploads($uploads)
+    {
+        $this->uploads = $uploads;
     }
 
     /**
      * Verify Hash Method
      *
-     * @param [type] $password
-     * @param [type] $vpassword
-     * @return void
+     * @param $password
+     * @param $vpassword
+     * @return bool
      */
     public function verifyHash($password, $vpassword)
     {
@@ -104,12 +116,11 @@ class User
      * Hash password Method
      *
      * @param [type] $password
-     * @return void
+     * @return string
      */
     public function hashPassword($password)
     {
-        $hash = password_hash($password, PASSWORD_DEFAULT);
-        return $hash;
+        return password_hash($password, PASSWORD_DEFAULT);
     }
 
     /**
@@ -133,6 +144,7 @@ class User
         session_destroy();
         header("location:index.php");
     }
+
     /**
      * User registration method
      *
@@ -145,7 +157,7 @@ class User
 
         try {
             // check if user already exsists via unique email address
-            $password = $this->hashPassword($this->_password);
+            $password = $this->hashPassword($this->password);
             $statement = $this->db->prepare('SELECT * FROM users WHERE email = :uemail');
             $statement->execute(['uemail' => $this->_email]);
             // email already exsists
@@ -155,12 +167,12 @@ class User
                 $statement = $this->db->prepare('INSERT INTO users (username, password, firstname, lastname, email) VALUES (:uname, :pword, :fname, :lname, :uemail)');
 
                 $statement->execute([
-                    'uname' => $this->_username,
+                    'uname' => $this->username,
                     // save the hashed password
                     'pword' => $password,
-                    'fname' => $this->_firstname,
-                    'lname' => $this->_lastname,
-                    'uemail' => $this->_email,
+                    'fname' => $this->firstname,
+                    'lname' => $this->lastname,
+                    'uemail' => $this->email,
                 ]);
             }
         } catch (PDOException $e) {
@@ -171,19 +183,19 @@ class User
     /**
      * User Login method
      *
-     * @return void
+     * @return bool
      */
     public function login()
     {
         try {
             $statement = $this->db->prepare('SELECT * FROM users where email = :email');
             $statement->execute([
-                'email' => $this->_email,
+                'email' => $this->email,
             ]);
 
             while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
 
-                if (password_verify($this->_password, $row["password"])) {
+                if (password_verify($this->password, $row["password"])) {
                     $_SESSION['login'] = true;
                     $_SESSION['id'] = $row['id'];
                     return true;
@@ -199,17 +211,34 @@ class User
     /**
      * Get current user info
      *
-     * @return void
+     * @return array
      */
     public function getInfo()
     {
         try {
             $statement = $this->db->prepare('SELECT * FROM users where id = :id');
-            $statement->execute(['id' => $this->_id]);
+            $statement->execute(['id' => $this->id]);
             while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-
                 return $row;
             }
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    /**
+     * add user upload
+     *
+     * @return void
+     */
+    public function addUpload()
+    {
+        try {
+            $statement = $this->db->prepare('UPDATE users SET uploads = :uploads WHERE id = :id');
+            $statement->execute([
+                'uploads' => $this->uploads,
+                'id' => $this->id,
+            ]);
         } catch (PDOException $e) {
             echo $e->getMessage();
         }

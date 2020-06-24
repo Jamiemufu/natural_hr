@@ -27,7 +27,7 @@ class Database
         $this->createDatabase();
         // use the newly created database
         $this->conn->exec("use $this->db");
-        //will only create table if already exsist
+        //will only create table if already exist
         $this->createTable();
         //enable try/catch
         $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -62,7 +62,8 @@ class Database
                 password VARCHAR(255) NOT NULL,
                 firstname VARCHAR(255) NOT NULL,
                 lastname VARCHAR(255) NOT NULL,
-                email VARCHAR(255) NOT NULL UNIQUE
+                email VARCHAR(255) NOT NULL UNIQUE,
+                uploads VARCHAR(255) NULL
                 )";
 
         // use exec() because no results are returned
@@ -77,7 +78,7 @@ class Database
     /**
      * Return connection
      *
-     * @return void
+     * @return PDO
      */
     public function returnConnection()
     {

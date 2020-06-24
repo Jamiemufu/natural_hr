@@ -5,6 +5,8 @@ class Validate
     private $_errors = array();
     private $_passed = false;
 
+    private $db;
+
     public function __construct()
     {
         $this->db = new Database();
@@ -18,7 +20,7 @@ class Validate
      *
      * @param [type] $inputs
      * @param array $items
-     * @return boolean
+     * @return Validate
      */
     public function isValid($inputs, $items = array())
     {
@@ -61,14 +63,14 @@ class Validate
      * Check if email address is already registered
      *
      * @param [type] $value
-     * @return void
+     * @return bool
      */
     public function checkEmailExsists($value)
     {
         $statement = $this->db->prepare('SELECT * FROM users WHERE email = :uemail');
         $statement->execute(['uemail' => $value]);
         if ($statement->rowCount() > 0) {
-           return true;
+            return true;
         }
     }
 
@@ -86,7 +88,7 @@ class Validate
     /**
      * Return all errors
      *
-     * @return void
+     * @return array
      */
     public function errors()
     {
@@ -96,7 +98,7 @@ class Validate
     /**
      * Return passed
      *
-     * @return void
+     * @return bool
      */
     public function valid()
     {

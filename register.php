@@ -66,11 +66,10 @@ if (isset($_POST['submit'])) {
     $msg = [];
 
     foreach ($validate->errors() as $error) {
-        print_r($error);
         $msg = seperateErrors($error, $msg);
     }
 
-    
+
     if ($validate->valid()) {
 
         //insert data into database.
@@ -81,6 +80,7 @@ if (isset($_POST['submit'])) {
         $user->setEmail($email);
 
         $register = $user->userRegistration();
+        header("location:login.php");
     }
 }
 
