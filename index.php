@@ -97,7 +97,7 @@ if (isset($_POST['submit'])) {
                 <?php if (isset($msg['password'])) {
                     echo "<span class='error'>{$msg['password']}</span>";
                 } ?>
-                <input type="text" name="password" required>
+                <input type="password" name="password" required>
             </label>
         </div>
         <!-- flex item -->

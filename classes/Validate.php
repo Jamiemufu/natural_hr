@@ -8,6 +8,10 @@ class Validate
     
     private $errors = array();
     private $passed = false;
+
+    /**
+     * @var PDO
+     */
     private $db;
 
     /**
