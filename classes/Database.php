@@ -7,15 +7,39 @@ if (!isset($_SESSION)) {
 
 require_once 'config.php';
 
+/**
+ * Class Database
+ */
 class Database
 {
+    /**
+     * @var string
+     */
     private $host = DB_SERVER;
+    /**
+     * @var string
+     */
     private $user = DB_USERNAME;
+    /**
+     * @var string
+     */
     private $db = DB_DATABASE;
+    /**
+     * @var string
+     */
     private $pass = DB_PASSWORD;
+    /**
+     * @var string
+     */
     private $table = DB_TABLE;
+    /**
+     * @var PDO
+     */
     private $conn;
 
+    /**
+     * Database constructor.
+     */
     public function __construct()
     {
 
@@ -33,10 +57,9 @@ class Database
         $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
+
     /**
-     * create a new database
-     *
-     * @return void
+     * Create database if doesnt exist
      */
     public function createDatabase()
     {
@@ -48,10 +71,9 @@ class Database
 
     }
 
+
     /**
-     * create a users table
-     *
-     * @return void
+     * Create table if doesnt exist
      */
     public function createTable()
     {
@@ -74,6 +96,7 @@ class Database
         }
 
     }
+
 
     /**
      * Return connection

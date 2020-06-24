@@ -1,26 +1,41 @@
 <?php
 
+/**
+ * Class Validate
+ */
 class Validate
 {
+    /**
+     * @var array
+     */
     private $_errors = array();
+    /**
+     * @var bool
+     */
     private $_passed = false;
 
+    /**
+     * @var PDO
+     */
     private $db;
 
+    /**
+     * Validate constructor.
+     */
     public function __construct()
     {
         $this->db = new Database();
         $this->db = $this->db->returnConnection();
     }
 
+
     /**
-     * isValid - check $_POST vars
+     * Check is post vars are valid
+     * Trim and strip
      *
-     * will return either passed or errors
-     *
-     * @param [type] $inputs
+     * @param $inputs
      * @param array $items
-     * @return Validate
+     * @return $this
      */
     public function isValid($inputs, $items = array())
     {
@@ -39,7 +54,7 @@ class Validate
                 }
                 // check if already registered
                 if ($rule === 'unique') {
-                    if (!$this->checkEmailExsists($value) === false) {
+                    if (!$this->checkEmailExists($value) === false) {
                         $this->addError("{$item} is already registered");
                     };
                 }
@@ -59,13 +74,14 @@ class Validate
         return $this;
     }
 
+
     /**
-     * Check if email address is already registered
+     * check if user email exists
      *
-     * @param [type] $value
+     * @param $value
      * @return bool
      */
-    public function checkEmailExsists($value)
+    public function checkEmailExists($value)
     {
         $statement = $this->db->prepare('SELECT * FROM users WHERE email = :uemail');
         $statement->execute(['uemail' => $value]);
@@ -74,19 +90,20 @@ class Validate
         }
     }
 
+
     /**
-     * Add errors
+     * Add error to errors
      *
-     * @param [type] $error
-     * @return void
+     * @param $error
      */
     private function addError($error)
     {
         $this->_errors[] = $error;
     }
 
+
     /**
-     * Return all errors
+     * Return any errors
      *
      * @return array
      */
@@ -95,8 +112,9 @@ class Validate
         return $this->_errors;
     }
 
+
     /**
-     * Return passed
+     * Return valid
      *
      * @return bool
      */

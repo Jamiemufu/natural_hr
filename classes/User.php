@@ -2,131 +2,134 @@
 
 include "Database.php";
 
+/**
+ * Class User
+ */
 class User
 {
+    /**
+     * @var
+     */
     protected $db;
+    /**
+     * @var
+     */
     private $id;
+    /**
+     * @var
+     */
     private $username;
+    /**
+     * @var
+     */
     private $password;
+    /**
+     * @var
+     */
     private $firstname;
+    /**
+     * @var
+     */
     private $lastname;
+    /**
+     * @var
+     */
     private $email;
+    /**
+     * @var
+     */
     private $uploads;
 
+
+    /**
+     * User constructor.
+     */
     public function __construct()
     {
         $this->db = new Database();
         $this->db = $this->db->returnConnection();
     }
 
+
     /**
-     * set User ID
-     *
-     * @param [type] $id
-     * @return void
+     * @param $id
      */
     public function setID($id)
     {
         $this->id = $id;
     }
 
+
     /**
-     * Set Username
-     *
-     * @param [type] $username
-     * @return void
+     * @param $username
      */
     public function setUsername($username)
     {
         $this->username = $username;
     }
 
+
     /**
-     * Set User email
-     *
-     * @param [type] $email
-     * @return void
+     * @param $email
      */
     public function setEmail($email)
     {
         $this->email = $email;
     }
 
+
     /**
-     * Set user password and hash it
-     *
-     * @param [type] $password
-     * @return void
+     * @param $password
      */
     public function setPassword($password)
     {
         $this->password = $password;
     }
 
+
     /**
-     * Set user firstname
-     *
-     * @param [type] $firstname
-     * @return void
+     * @param $firstname
      */
     public function setFirstname($firstname)
     {
         $this->firstname = $firstname;
     }
 
+
     /**
-     * Set User lastname
-     *
-     * @param [type] $lastname
-     * @return void
+     * @param $lastname
      */
     public function setLastname($lastname)
     {
         $this->lastname = $lastname;
     }
 
+
     /**
-     * Set user uploads
-     *
      * @param $uploads
-     * @retern void
      */
     public function setUploads($uploads)
     {
         $this->uploads = $uploads;
     }
 
-    /**
-     * Verify Hash Method
-     *
-     * @param $password
-     * @param $vpassword
-     * @return bool
-     */
-    public function verifyHash($password, $vpassword)
-    {
-        if (password_verify($password, $vpassword)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     /**
-     * Hash password Method
+     * Hash password
      *
-     * @param [type] $password
-     * @return string
+     * @param $password
+     * @return false|string|null
      */
     public function hashPassword($password)
     {
         return password_hash($password, PASSWORD_DEFAULT);
     }
 
+
     /**
      * Check if user logged in
      *
-     * @return boolean
+     * @return bool
      */
     public function isLoggedIn()
     {
@@ -137,6 +140,10 @@ class User
         }
     }
 
+
+    /**
+     * Logout
+     */
     public function logout()
     {
         $_SESSION['login'] === false;
@@ -145,12 +152,11 @@ class User
         header("location:index.php");
     }
 
+
     /**
-     * User registration method
+     * User Registration
      *
-     * Check for exsisting users email address, or save new user
-     *
-     * @return void
+     * @return bool
      */
     public function userRegistration()
     {
@@ -180,8 +186,9 @@ class User
         }
     }
 
+
     /**
-     * User Login method
+     * User Login
      *
      * @return bool
      */
@@ -208,10 +215,11 @@ class User
         }
     }
 
+
     /**
-     * Get current user info
+     * get current user info
      *
-     * @return array
+     * @return mixed
      */
     public function getInfo()
     {
@@ -226,10 +234,9 @@ class User
         }
     }
 
+
     /**
-     * add user upload
-     *
-     * @return void
+     * Add user upload
      */
     public function addUpload()
     {

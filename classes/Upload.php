@@ -1,51 +1,102 @@
 <?php
 
+/**
+ * Class Upload
+ */
 class Upload
 {
 
+    /**
+     * @var
+     */
     private $destinationPath;
+    /**
+     * @var
+     */
     private $errorMessage;
+    /**
+     * @var
+     */
     private $extensions;
+    /**
+     * @var
+     */
     private $maxSize;
+    /**
+     * @var
+     */
     private $uploadName;
+    /**
+     * @var
+     */
     private $originalName;
+    /**
+     * @var string
+     */
     public $name = 'Upload';
 
+    /**
+     * @param $path
+     */
     public function setDir($path)
     {
         $this->destinationPath = $path;
     }
 
+    /**
+     * @param $sizeMB
+     */
     public function setMaxSize($sizeMB)
     {
         $this->maxSize = $sizeMB * (1024 * 1024);
     }
 
+    /**
+     * @param $options
+     */
     public function setExtensions($options)
     {
         $this->extensions = $options;
     }
 
+    /**
+     * @param $message
+     */
     public function setMessage($message)
     {
         $this->errorMessage = $message;
     }
 
+    /**
+     * @return mixed
+     */
     public function getMessage()
     {
         return $this->errorMessage;
     }
 
+    /**
+     * @return mixed
+     */
     public function getUploadName()
     {
         return $this->uploadName;
     }
 
-    public function getOriginalName() 
+    /**
+     * @return mixed
+     */
+    public function getOriginalName()
     {
         return $this->originalName;
     }
 
+    /**
+     * @param $file
+     * @param $username
+     * @param $id
+     * @return bool
+     */
     public function uploadFile($file, $username, $id)
     {
         $result = false;
