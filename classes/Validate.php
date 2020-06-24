@@ -6,8 +6,8 @@
 class Validate
 {
     
-    private $_errors = array();
-    private $_passed = false;
+    private $errors = array();
+    private $passed = false;
     private $db;
 
     /**
@@ -58,8 +58,8 @@ class Validate
             }
         }
 
-        if (empty($this->_errors)) {
-            $this->_passed = true;
+        if (empty($this->errors)) {
+            $this->passed = true;
         }
 
         return $this;
@@ -89,7 +89,7 @@ class Validate
      */
     private function addError($error)
     {
-        $this->_errors[] = $error;
+        $this->errors[] = $error;
     }
 
 
@@ -100,7 +100,7 @@ class Validate
      */
     public function errors()
     {
-        return $this->_errors;
+        return $this->errors;
     }
 
 
@@ -111,7 +111,7 @@ class Validate
      */
     public function valid()
     {
-        return $this->_passed;
+        return $this->passed;
     }
 
 }
